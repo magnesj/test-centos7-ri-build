@@ -37,8 +37,8 @@ jobs:
         make -j8
         make package
 
-      - name: Upload artifact
-          uses: actions/upload-artifact@v1
-          with:
-            name: ResInsight
-            path: ${{ runner.workspace }}/ResInsight/cmakebuild/packages
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: ResInsight
+        path: ${{ runner.workspace }}/ResInsight/cmakebuild/packages
