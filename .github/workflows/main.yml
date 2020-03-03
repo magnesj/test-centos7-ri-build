@@ -4,13 +4,16 @@ jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     container: centos:7
-      volumes:
-        - $GITHUB_WORKSPACE/package:/shared_package
+      options: -v /__w/test-centos7-ri-build/test-centos7-ri-build/cmakebuild/packages:/packages/:rw
     steps:
 
     - name: Build ResInsight
-      run: echo "something" > /shared_package/test.txt
-
+      run: |
+        mkdir cmakebuild
+        cd cmakebuild
+        mkdir packages
+        cd packages
+        echo "something" > test.txt
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
