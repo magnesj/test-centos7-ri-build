@@ -37,6 +37,7 @@ jobs:
         cmake ../ResInsight
         make -j8
         make package
+        rm -rf packages/_CPack_Packages
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
