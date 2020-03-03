@@ -7,6 +7,23 @@ jobs:
     steps:
     - name: Intall Zip
       run: | 
-        apt-get update
-        apt-get install zip -y      
-      
+        yum install -y centos-release-scl
+        yum-config-manager --enable rhel-server-rhscl-7-rpms
+
+        yum install -y qt5-qtbase
+        yum install -y qt5-qtbase-devel
+        yum install -y qt5-qtscript-devel
+
+        yum install -y cmake
+        yum install -y git
+        yum install -y make
+
+        yum install -y mesa-libGL-devel
+        yum install -y freeglut-devel
+
+        yum install -y devtoolset-6
+        source /opt/rh/devtoolset-6/enable
+
+        cmake --version
+        git --version
+              
