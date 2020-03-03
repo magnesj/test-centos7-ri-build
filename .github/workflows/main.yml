@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     container: centos:7
     steps:
-    - name: Intall Zip
+    - name: Intall Dependencies
       run: | 
         yum install -y centos-release-scl
         yum-config-manager --enable rhel-server-rhscl-7-rpms
@@ -24,6 +24,14 @@ jobs:
         yum install -y devtoolset-6
         source /opt/rh/devtoolset-6/enable
 
+    - name: Intall Dependencies
+      run: | 
         cmake --version
         git --version
               
+        git clone git://github.com/OPM/ResInsight.git ResInsight
+        mkdir cmakebuild
+        cd cmakebuild
+        cmake ../ResInsight
+        make -j8
+        make package
