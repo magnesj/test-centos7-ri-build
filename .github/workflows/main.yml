@@ -10,7 +10,9 @@ jobs:
 
     - name: Build ResInsight
       run: |
-        cd cmakebuild/packages
+        cd cmakebuild
+        mkdir packages
+        cd packages
         echo "something" > test.txt
 
     - name: Upload artifact
