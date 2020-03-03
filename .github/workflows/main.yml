@@ -22,16 +22,23 @@ jobs:
         yum install -y freeglut-devel
 
         yum install -y devtoolset-6
-        source /opt/rh/devtoolset-6/enable
 
-    - name: Intall Dependencies
+    - name: Build ResInsight
       run: | 
         cmake --version
         git --version
               
+        source /opt/rh/devtoolset-6/enable
+
         git clone git://github.com/OPM/ResInsight.git ResInsight
         mkdir cmakebuild
         cd cmakebuild
         cmake ../ResInsight
         make -j8
         make package
+
+    - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ResInsight
+          path: ${{ runner.workspace }}/ResInsight/cmakebuild/packages
