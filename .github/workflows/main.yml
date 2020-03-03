@@ -20,4 +20,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: ResInsight
-        path: ${{ runner.workspace }}/package
+        path: ${{ runner.workspace }}/packages
