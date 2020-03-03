@@ -10,14 +10,11 @@ jobs:
 
     - name: Build ResInsight
       run: |
-        mkdir cmakebuild
-        cd cmakebuild
-        mkdir packages
-        cd packages
+        cd cmakebuild/packages
         echo "something" > test.txt
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
         name: ResInsight
-        path: ${{ runner.workspace }}/packages
+        path: /packages
