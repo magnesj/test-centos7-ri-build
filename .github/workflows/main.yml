@@ -10,6 +10,7 @@ jobs:
 
     - name: Build ResInsight
       run: |
+        mkdir cmakebuild
         cd cmakebuild
         mkdir packages
         cd packages
