@@ -34,7 +34,7 @@ jobs:
         git clone git://github.com/OPM/ResInsight.git ResInsight
         mkdir cmakebuild
         cd cmakebuild
-        cmake -DRESINSIGHT_ENABLE_COTIRE=true ../ResInsight
+        cmake -DRESINSIGHT_QT5_BUNDLE_LIBRARIES=ON ../ResInsight
         make -j8
         make package
         rm -rf packages/_CPack_Packages
