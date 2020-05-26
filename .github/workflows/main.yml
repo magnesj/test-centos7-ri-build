@@ -29,13 +29,13 @@ jobs:
         
         yum install -y rh-python36
      
-    - name: Install Python dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install grpcio-tools
-
     - name: Build ResInsight
       run: | 
+        
+        scl enable rh-python36 bash
+        python -m pip install --upgrade pip
+        python -m pip install grpcio-tools
+        
         cmake --version
         git --version
               
@@ -56,7 +56,7 @@ jobs:
         -DRESINSIGHT_ENABLE_GRPC=true \
         -DVCPKG_TARGET_TRIPLET=x64-linux \
         -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake \
-        -DRESINSIGHT_GRPC_PYTHON_EXECUTABLE=python3 \
+        -DRESINSIGHT_GRPC_PYTHON_EXECUTABLE=python \
         ../ResInsight
         
         make -j8
