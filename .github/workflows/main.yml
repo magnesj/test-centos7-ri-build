@@ -47,9 +47,8 @@ jobs:
         cd ResInsight
         git submodule update --init
         
-        cd vcpkg
-        ./bootstrap-vcpkg.sh 
-        ./vcpkg install grpc
+        vcpkg/bootstrap-vcpkg.sh 
+        vcpkg/vcpkg install grpc
         
         mkdir cmakebuild
         cd cmakebuild
