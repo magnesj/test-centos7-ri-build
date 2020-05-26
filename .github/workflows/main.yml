@@ -19,13 +19,15 @@ jobs:
         yum install -y qt5-qtbase-devel
         yum install -y qt5-qtscript-devel
 
-        yum install -y cmake
+        yum install -y cmake3
         yum install -y make
 
         yum install -y mesa-libGL-devel
         yum install -y freeglut-devel
 
         yum install -y devtoolset-7
+        
+        yum install rh-python36
     - name: Build ResInsight
       run: | 
         cmake --version
@@ -43,7 +45,14 @@ jobs:
         
         mkdir cmakebuild
         cd cmakebuild
-        cmake -DRESINSIGHT_QT5_BUNDLE_LIBRARIES=ON ../ResInsight
+        cmake3 \
+        -DRESINSIGHT_QT5_BUNDLE_LIBRARIES=ON \
+        -DRESINSIGHT_ENABLE_GRPC=true \
+        -DVCPKG_TARGET_TRIPLET=x64-linux \
+        -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake \
+        -DRESINSIGHT_GRPC_PYTHON_EXECUTABLE=python3 \
+        ../ResInsight
+        
         make -j8
         make package
         rm -rf packages/_CPack_Packages
