@@ -32,14 +32,16 @@ jobs:
     - name: Build ResInsight
       run: | 
         
-        scl enable rh-python36 bash
+        source /opt/rh/devtoolset-7/enable
+        source /opt/rh/rh-python36/enable
+        
         python -m pip install --upgrade pip
         python -m pip install grpcio-tools
         
         cmake --version
         git --version
-              
-        source /opt/rh/devtoolset-7/enable
+        g++ --version
+        python --version
 
         git clone git://github.com/OPM/ResInsight.git ResInsight
         cd ResInsight
