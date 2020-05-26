@@ -11,13 +11,15 @@ jobs:
       run: | 
         yum install -y centos-release-scl
         yum-config-manager --enable rhel-server-rhscl-7-rpms
+      
+        yum install -y https://repo.ius.io/ius-release-el7.rpm
+        yum install -y git222
 
         yum install -y qt5-qtbase
         yum install -y qt5-qtbase-devel
         yum install -y qt5-qtscript-devel
 
         yum install -y cmake
-        yum install -y git
         yum install -y make
 
         yum install -y mesa-libGL-devel
