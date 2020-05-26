@@ -27,7 +27,13 @@ jobs:
 
         yum install -y devtoolset-7
         
-        yum install rh-python36
+        yum install -y rh-python36
+     
+    - name: Install Python dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install grpcio-tools
+
     - name: Build ResInsight
       run: | 
         cmake --version
