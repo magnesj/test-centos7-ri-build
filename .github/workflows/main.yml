@@ -11,30 +11,55 @@ jobs:
       run: | 
         yum install -y centos-release-scl
         yum-config-manager --enable rhel-server-rhscl-7-rpms
+      
+        yum install -y https://repo.ius.io/ius-release-el7.rpm
+        yum install -y git222
 
         yum install -y qt5-qtbase
         yum install -y qt5-qtbase-devel
         yum install -y qt5-qtscript-devel
 
-        yum install -y cmake
-        yum install -y git
+        yum install -y cmake3
         yum install -y make
 
         yum install -y mesa-libGL-devel
         yum install -y freeglut-devel
 
-        yum install -y devtoolset-6
+        yum install -y devtoolset-7
+        
+        yum install -y rh-python36
+     
     - name: Build ResInsight
       run: | 
-        cmake --version
+        
+        source /opt/rh/devtoolset-7/enable
+        source /opt/rh/rh-python36/enable
+        
+        cmake3 --version
         git --version
-              
-        source /opt/rh/devtoolset-6/enable
+        g++ --version
+        python --version
+
+        python -m pip install --upgrade pip
+        python -m pip install grpcio-tools
 
         git clone git://github.com/OPM/ResInsight.git ResInsight
+        cd ResInsight
+        git submodule update --init
+        
+        vcpkg/bootstrap-vcpkg.sh 
+        vcpkg/vcpkg install grpc
+        
         mkdir cmakebuild
         cd cmakebuild
-        cmake -DRESINSIGHT_QT5_BUNDLE_LIBRARIES=ON ../ResInsight
+        cmake3 \
+        -DRESINSIGHT_QT5_BUNDLE_LIBRARIES=ON \
+        -DRESINSIGHT_ENABLE_GRPC=true \
+        -DVCPKG_TARGET_TRIPLET=x64-linux \
+        -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake \
+        -DRESINSIGHT_GRPC_PYTHON_EXECUTABLE=python \
+        ..
+        
         make -j8
         make package
         rm -rf packages/_CPack_Packages
@@ -43,4 +68,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: ResInsight
-        path: ./cmakebuild/packages
+        path: ./ResInsight/cmakebuild/packages
